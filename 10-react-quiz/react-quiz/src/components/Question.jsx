@@ -1,19 +1,39 @@
 import Options from "./Options";
 
-function Question({ questInfo, index, dispatch, numQuestion }) {
+function Question({ questInfo, index, dispatch, numQuestion, answer }) {
   console.log(questInfo);
   return (
     index < numQuestion && (
       <div>
         <h4>{questInfo.question}</h4>
-        <div className="option">
-          {
-            questInfo.options.map(option => <Options option={option} key={option}/>)
-          }
+        <div className="options">
+          {questInfo.options.map((option, optIndex) => (
+            <Options
+              option={option}
+              key={option}
+              optIndex={optIndex}
+              dispatch={dispatch}
+              answer={answer}
+              correctOption={questInfo.correctOption}
+            />
+          ))}
         </div>
-        <button className="btn" onClick={() => dispatch({ type: "next" })}>
-          Next
-        </button>
+        {answer !== null && index < numQuestion - 1 && (
+          <button
+            className="btn btn-ui"
+            onClick={() => dispatch({ type: "next" })}
+          >
+            Next
+          </button>
+        )}
+        {answer !== null && index === numQuestion - 1 && (
+          <button
+            className="btn btn-ui"
+            onClick={() => dispatch({ type: "finish" })}
+          >
+            Finish
+          </button>
+        )}
       </div>
     )
   );

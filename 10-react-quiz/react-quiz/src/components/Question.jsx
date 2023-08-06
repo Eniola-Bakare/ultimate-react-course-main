@@ -1,7 +1,24 @@
+import { useEffect } from "react";
 import Options from "./Options";
 
-function Question({ questInfo, index, dispatch, numQuestion, answer }) {
-  console.log(questInfo);
+function Question({
+  questInfo,
+  index,
+  dispatch,
+  numQuestion,
+  answer,
+  secondsRemaining,
+}) {
+  useEffect(() => {
+    const id = setInterval(() => {
+      secondsRemaining > 0
+        ? dispatch({ type: "tick" })
+        : dispatch({ type: "finish" });
+    }, 1000);
+    return () => clearInterval(id);
+  }, [secondsRemaining]);
+  const minute = secondsRemaining / 60;
+  const seconds = secondsRemaining % 60;
   return (
     index < numQuestion && (
       <div>
@@ -34,6 +51,9 @@ function Question({ questInfo, index, dispatch, numQuestion, answer }) {
             Finish
           </button>
         )}
+        <div className="timer" onClick={() => dispatch({ type: "tick" })}>
+          {minute < 10 ? `0${Math.floor(minute)}` : minute} : {seconds < 10 ? `0${Math.floor(seconds)}` : seconds}
+        </div>
       </div>
     )
   );

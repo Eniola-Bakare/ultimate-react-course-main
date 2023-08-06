@@ -18,16 +18,25 @@ const initialState = {
   answer: null,
   points: 0,
   highscore: 0,
+  secondsRemaining: 30,
 };
 
 const reducerFunc = (state, action) => {
   switch (action.type) {
     case "dataRecieved":
-      return { ...state, questions: action.payload, status: "ready" };
+      return {
+        ...state,
+        questions: action.payload,
+        status: "ready",
+      };
     case "dataFailed":
       return { ...state, status: "error" };
     case "start":
-      return { ...state, status: "active" };
+      return {
+        ...state,
+        status: "active",
+        secondsRemaining: state.secondsRemaining * state.questions.length,
+      };
     case "newAnswer":
       const question = state.questions[state.index];
       return {
@@ -47,10 +56,16 @@ const reducerFunc = (state, action) => {
         highscore:
           state.points > state.highscore ? state.points : state.highscore,
       };
+    case "tick":
+      return {
+        ...state,
+        secondsRemaining: state.secondsRemaining - 1,
+      };
     case "restart":
       return {
         ...initialState,
         questions: state.questions,
+        highscore: state.highscore,
         status: "ready",
       };
     default:
@@ -58,8 +73,10 @@ const reducerFunc = (state, action) => {
   }
 };
 function App() {
-  const [{ questions, status, index, answer, points, highscore }, dispatch] =
-    useReducer(reducerFunc, initialState);
+  const [
+    { questions, status, index, answer, points, highscore, secondsRemaining },
+    dispatch,
+  ] = useReducer(reducerFunc, initialState);
   const numQuestion = questions.length;
   const totalPointsObtaiable = questions.reduce(
     (acc, cur) => (acc += cur.points),
@@ -98,6 +115,7 @@ function App() {
               numQuestion={numQuestion}
               answer={answer}
               dispatch={dispatch}
+              secondsRemaining={secondsRemaining}
             />
           </>
         )}

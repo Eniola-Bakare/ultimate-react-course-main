@@ -3,7 +3,7 @@ function FinishScreen({ points, totalPointsObtaiable, highscore, dispatch }) {
   return (
     <>
       <p className="result">
-        You scored <strong> {points}</strong>/{totalPointsObtaiable},{" "}
+        You scored <strong> {points}</strong>/{totalPointsObtaiable},
         {Math.ceil(percentage)}%
       </p>
       <p className="highscore">Highscore is: <strong>{highscore}</strong></p>

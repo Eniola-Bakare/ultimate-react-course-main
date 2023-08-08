@@ -4,7 +4,7 @@ import CountryItem from "./CountryItem";
 import Spinner from "./Spinner";
 
 function CountryList({ data, isLoading }) {
-  console.log(data);
+  // console.log(data);
   if (isLoading) return <Spinner />;
   if (!data.length)
     return (
@@ -13,12 +13,12 @@ function CountryList({ data, isLoading }) {
   const countries = data.reduce((accArr, curData) => {
     return accArr.map((elem) => elem.country).includes(curData.country)
       ? [...accArr]
-      : [...accArr, { country: curData.country }];
+      : [...accArr, { country: curData.country, emoji: curData.emoji }];
   }, []);
   return (
     <ul className={styles.countryList}>
       {countries.map((country) => (
-        <CountryItem country={country} />
+        <CountryItem country={country} key={country.id} />
       ))}
     </ul>
   );

@@ -6,6 +6,7 @@ function CountryItem({ country }) {
       <span>{country.emoji}</span>
       <span>{country.country}</span>
     </li>
+
   );
 }
 

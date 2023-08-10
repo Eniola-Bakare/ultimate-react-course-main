@@ -18,15 +18,15 @@ function City() {
   const { id } = useParams();
   const { getCityDetails, currentCity, isLoading } = useCities();
   const { cityName, emoji, date, notes } = currentCity;
-  
+
   useEffect(
     function () {
       getCityDetails(id);
     },
     [id]
-    );
+  );
 
-    if (isLoading) return <Spinner />;
+  if (isLoading) return <Spinner />;
   return (
     <div className={styles.city}>
       <div className={styles.row}>

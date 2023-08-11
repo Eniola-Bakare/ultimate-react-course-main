@@ -1,4 +1,8 @@
-function FinishScreen({ points, totalPointsObtaiable, highscore, dispatch }) {
+import { useQuizContext } from "../contexts/QuizContexts";
+
+function FinishScreen() {
+  const { points, totalPointsObtaiable, highscore, dispatch } =
+    useQuizContext();
   const percentage = (points / totalPointsObtaiable) * 100;
   return (
     <>
@@ -6,14 +10,16 @@ function FinishScreen({ points, totalPointsObtaiable, highscore, dispatch }) {
         You scored <strong> {points}</strong>/{totalPointsObtaiable},
         {Math.ceil(percentage)}%
       </p>
-      <p className="highscore">Highscore is: <strong>{highscore}</strong></p>
+      <p className="highscore">
+        Highscore is: <strong>{highscore}</strong>
+      </p>
 
       <button
-            className="btn btn-ui"
-            onClick={() => dispatch({ type: "restart" })}
-          >
-            Restart
-          </button>
+        className="btn btn-ui"
+        onClick={() => dispatch({ type: "restart" })}
+      >
+        Restart
+      </button>
     </>
   );
 }

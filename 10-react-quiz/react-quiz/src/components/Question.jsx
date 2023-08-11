@@ -1,14 +1,11 @@
 import { useEffect } from "react";
 import Options from "./Options";
+import { useQuizContext } from "../contexts/QuizContexts";
 
-function Question({
-  questInfo,
-  index,
-  dispatch,
-  numQuestion,
-  answer,
-  secondsRemaining,
-}) {
+function Question() {
+  const { questions, index, answer, secondsRemaining, numQuestion, dispatch } =
+    useQuizContext();
+
   useEffect(() => {
     const id = setInterval(() => {
       secondsRemaining > 0
@@ -16,7 +13,9 @@ function Question({
         : dispatch({ type: "finish" });
     }, 1000);
     return () => clearInterval(id);
-  }, [secondsRemaining]);
+  }, [secondsRemaining, dispatch]);
+
+  const questInfo = questions[index];
   const minute = secondsRemaining / 60;
   const seconds = secondsRemaining % 60;
   return (
@@ -52,7 +51,8 @@ function Question({
           </button>
         )}
         <div className="timer" onClick={() => dispatch({ type: "tick" })}>
-          {minute < 10 ? `0${Math.floor(minute)}` : minute} : {seconds < 10 ? `0${Math.floor(seconds)}` : seconds}
+          {minute < 10 ? `0${Math.floor(minute)}` : minute} :{" "}
+          {seconds < 10 ? `0${Math.floor(seconds)}` : seconds}
         </div>
       </div>
     )

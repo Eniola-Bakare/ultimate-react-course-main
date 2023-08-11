@@ -1,4 +1,3 @@
-import { useEffect, useReducer } from "react";
 // import DateCounter from "./DateCounter";
 import Header from "./Header";
 import Main from "./Main";
@@ -11,18 +10,7 @@ import FinishScreen from "./FinishScreen";
 import { useQuizContext } from "../contexts/QuizContexts";
 
 function App() {
-  const {
-    questions,
-    status,
-    index,
-    answer,
-    points,
-    highscore,
-    secondsRemaining,
-    numQuestion,
-    totalPointsObtaiable,
-    dispatch
-  } = useQuizContext();
+  const { status } = useQuizContext();
 
   return (
     <div className="app">
@@ -30,37 +18,15 @@ function App() {
       <Header />
       <Main>
         {status === "loading" && <Loader />}
-        {status === "ready" && (
-          <StartScreen numQuestion={numQuestion} dispatch={dispatch} />
-        )}
+        {status === "ready" && <StartScreen />}
         {status === "error" && <Error />}
         {status === "active" && (
           <>
-            <Progress
-              index={index}
-              totalPointsObtaiable={totalPointsObtaiable}
-              numQuestion={numQuestion}
-              points={points}
-              answer={answer}
-            />
-            <Question
-              index={index}
-              questInfo={questions[index]}
-              numQuestion={numQuestion}
-              answer={answer}
-              dispatch={dispatch}
-              secondsRemaining={secondsRemaining}
-            />
+            <Progress />
+            <Question />
           </>
         )}
-        {status === "finished" && (
-          <FinishScreen
-            points={points}
-            totalPointsObtaiable={totalPointsObtaiable}
-            highscore={highscore}
-            dispatch={dispatch}
-          />
-        )}
+        {status === "finished" && <FinishScreen />}
       </Main>
     </div>
   );

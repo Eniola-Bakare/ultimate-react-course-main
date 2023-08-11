@@ -1,5 +1,5 @@
 import { useEffect, useReducer } from "react";
-import DateCounter from "./DateCounter";
+import DateCounter from "../components/DateCounter";
 import Header from "./Header";
 import Main from "./Main";
 import Loader from "./Loader";

@@ -6,11 +6,11 @@ function Menu() {
   const menu = useLoaderData();
 
   return (
-    <h1>
+    <ul className="divide-y-5 divide-stone-200 px-4">
       {menu.map((eachMenu) => (
         <MenuItem pizza={eachMenu} key={eachMenu.id} />
       ))}
-    </h1>
+    </ul>
   );
 }
 

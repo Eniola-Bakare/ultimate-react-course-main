@@ -2,6 +2,9 @@ import { Form, redirect, useActionData, useNavigation } from "react-router-dom";
 import { createOrder } from "../../services/apiRestaurant";
 import Button from "../../ui/Button";
 import { useSelector } from "react-redux";
+import { getCart } from "../cart/cartSlice";
+import EmptyCart from "../cart/EmptyCart";
+import LinkButton from "../../ui/LinkButton";
 
 // https://uibakery.io/regex-library/phone-number
 const isValidPhone = (str) =>
@@ -40,7 +43,9 @@ function CreateOrder() {
   const { userName } = useSelector((state) => state.user);
 
   // const [withPriority, setWithPriority] = useState(false);
-  const cart = fakeCart;
+  const cart = useSelector(getCart);
+
+  if (!cart.length) return <EmptyCart />;
 
   return (
     <div className="px-4 py-6">
@@ -49,7 +54,13 @@ function CreateOrder() {
       <Form method="POST">
         <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
           <label className="sm:basis-40">First Name</label>
-          <input type="text" className="input grow" defaultValue={userName} name="customer" required />
+          <input
+            type="text"
+            className="input grow"
+            defaultValue={userName}
+            name="customer"
+            required
+          />
         </div>
 
         <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
@@ -85,11 +96,12 @@ function CreateOrder() {
           </label>
         </div>
 
-        <div>
+        <div className="flex items-center gap-3">
           <input type="hidden" name="cart" value={JSON.stringify(cart)} />
           <Button type="primary" disabled={isSubmitting}>
             {isSubmitting ? "Placing order..." : "Order now"}
           </Button>
+          <LinkButton to="/cart">&larr; Back to cart</LinkButton>
         </div>
       </Form>
     </div>
@@ -106,11 +118,14 @@ export async function action({ request }) {
   };
 
   const errors = {};
-  if (!isValidPhone(order.phone))
-    errors.phone = "Please give a valid phone number";
-  if (Object.keys(errors).length > 0) return errors;
-  const newOrder = await createOrder(order);
+  // if (!isValidPhone(order.phone))
+  // if (!order.phone)
+  // if (!order.phone)
+  //   errors.phone = "Please give a valid phone number";
 
+  if (Object.keys(errors).length > 0) return errors;
+
+  const newOrder = await createOrder(order);
   return redirect(`/order/${newOrder.id}`);
 }
 export default CreateOrder;

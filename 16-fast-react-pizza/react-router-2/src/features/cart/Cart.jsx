@@ -3,7 +3,7 @@ import Button from "../../ui/Button";
 import CartItem from "./CartItem";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserName } from "../user/userSlice";
-import { clearCart, getCart } from "./cartSlice";
+import { clearCart } from "./cartSlice";
 import EmptyCart from "./EmptyCart";
 
 // const fakeCart = [
@@ -32,8 +32,8 @@ import EmptyCart from "./EmptyCart";
 
 function Cart() {
   const { userName } = useSelector(getUserName);
-  const cart = useSelector(getCart);
   const dispatch = useDispatch();
+  const cart = useSelector((state) => state.cart.cart);
 
   const handleClearCart = () => {
     dispatch(clearCart());

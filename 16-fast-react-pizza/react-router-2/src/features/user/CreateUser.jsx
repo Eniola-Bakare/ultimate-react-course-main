@@ -11,9 +11,6 @@ function CreateUser() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log(username);
-    console.log(!!username, "not here");
-    console.log(username == undefined, "here 2");
     if (username.trim() === "") return;
 
     dispatch(updateName(username));

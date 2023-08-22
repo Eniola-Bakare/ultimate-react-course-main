@@ -24,14 +24,15 @@ function CabinTable() {
     filteredCabins = cabins.filter((cabin) => cabin.discount > 0);
 
   //2. SORT BY FUNC
-  const sortBy = searchParams.get("sortBy") || "";
+  const sortBy = searchParams.get("sortBy") || "regularPrice-asc";
   const [field, direction] = sortBy.split("-");
 
   const modifier = direction === "asc" ? 1 : -1;
-  const sortedCabins = filteredCabins.sort(
-    (a, b) => a[field] - b[field] * modifier
-  );
-  console.log(filteredCabins);
+  const sortedCabins = filteredCabins.sort((a, b) => {
+    // if (field === "name") return a[0]?.localCompare(b[0]);
+    return (a[field] - b[field]) * modifier;
+  });
+
   return (
     <Menus>
       <Table columns="0.6fr 1.8fr 2.2fr 1fr 1fr 1fr">

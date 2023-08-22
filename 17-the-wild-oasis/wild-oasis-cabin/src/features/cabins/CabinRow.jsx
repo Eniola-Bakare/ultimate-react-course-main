@@ -103,7 +103,7 @@ function CabinRow({ cabin }) {
               </Modal.Open>
             </Menus.List>
 
-            <Modal.Window name="edit">b
+            <Modal.Window name="edit">
               <CreateCabinForm cabinToEdit={cabin} />
             </Modal.Window>
 

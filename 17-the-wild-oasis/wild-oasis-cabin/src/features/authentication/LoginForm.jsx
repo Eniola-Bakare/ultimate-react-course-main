@@ -5,6 +5,7 @@ import Input from "../../ui/Input";
 import { login } from "../../services/apiAuth";
 import { useLogin } from "./useLogin";
 import SpinnerMini from "../../ui/SpinnerMini";
+import CabinTable from "../cabins/CabinTable";
 
 function LoginForm() {
   const { login, isLogingIn } = useLogin();
@@ -31,6 +32,7 @@ function LoginForm() {
       <div
         style={{
           height: "50dvh",
+
           display: "flex",
           flexDirection: "column",
           gap: "20px",

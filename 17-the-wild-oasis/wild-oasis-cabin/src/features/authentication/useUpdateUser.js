@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import {updateCurrentUser as updateCurrentUserApi } from "../../services/apiAuth";
+import { updateCurrentUser as updateCurrentUserApi } from "../../services/apiAuth";
 import { toast } from "react-hot-toast";
 
 export function useUpdateUser() {
@@ -8,7 +8,7 @@ export function useUpdateUser() {
     mutationFn: updateCurrentUserApi,
     onSuccess: () => {
       toast.success("User account successfully uploaded");
-      queryClient.invalidateQueries({ queryKey: ["user"] });
+      queryClient.invalidateQueries("user");
     },
     onError: (err) => toast.error(err.message),
   });

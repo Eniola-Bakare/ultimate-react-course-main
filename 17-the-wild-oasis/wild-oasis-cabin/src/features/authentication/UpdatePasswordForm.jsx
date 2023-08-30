@@ -1,10 +1,17 @@
 import { useForm } from "react-hook-form";
 import Button from "../../ui/Button";
 import Form from "../../ui/Form";
-import FormRow from "../../ui/FormRow";
 import Input from "../../ui/Input";
 
 import { useUpdateUser } from "./useUpdateUser";
+import { styled } from "styled-components";
+
+const StyledField = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+`;
 
 function UpdatePasswordForm() {
   const { register, handleSubmit, formState, getValues, reset } = useForm();
@@ -17,11 +24,17 @@ function UpdatePasswordForm() {
   }
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
-      <FormRow
-        label="Password (min 8 characters)"
-        error={errors?.password?.message}
-      >
+    <Form
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        gap: "15px",
+        width: "70%",
+      }}
+      onSubmit={handleSubmit(onSubmit)}
+    >
+      <StyledField>
+        <label htmlFor="password">Password (min 8 charaters)</label>
         <Input
           type="password"
           id="password"
@@ -35,12 +48,11 @@ function UpdatePasswordForm() {
             },
           })}
         />
-      </FormRow>
+        <p style={{color: 'red'}}>{errors?.password?.message}</p>
+      </StyledField>
 
-      <FormRow
-        label="Confirm password"
-        error={errors?.passwordConfirm?.message}
-      >
+      <StyledField>
+        <label htmlFor="passwordConfirm">Confirm password</label>
         <Input
           type="password"
           autoComplete="new-password"
@@ -52,13 +64,14 @@ function UpdatePasswordForm() {
               getValues().password === value || "Passwords need to match",
           })}
         />
-      </FormRow>
-      <FormRow>
+         <p style={{color: 'red'}}>{errors?.passwordConfirm?.message}</p>
+      </StyledField>
+      <div>
         <Button onClick={reset} type="reset" variation="secondary">
           Cancel
         </Button>
         <Button disabled={isUpdating}>Update password</Button>
-      </FormRow>
+      </div>
     </Form>
   );
 }

@@ -26,7 +26,7 @@ function SignupForm() {
         display: "flex",
         flexDirection: "column",
         gap: "15px",
-        width: "60%",
+        width: "70%",
       }}
       onSubmit={handleSubmit(onSubmit)}
     >

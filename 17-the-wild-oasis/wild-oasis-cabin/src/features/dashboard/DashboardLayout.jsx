@@ -4,6 +4,8 @@ import Spinner from "../../ui/Spinner";
 import { useRecentStays } from "./useRecentStays";
 import Stats from "./Stats";
 import { useCabins } from "../cabins/useCabins";
+import SalesChart from "./SalesChart";
+import DurationChart from "./DurationChart";
 
 const StyledDashboardLayout = styled.div`
   display: grid;
@@ -22,7 +24,6 @@ function DashboardLayout() {
   } = useRecentStays();
   const { cabins, isLoading: isLoading3 } = useCabins();
 
-  console.log(stays, bookings);
   if (isLoading1 || isLoading2) return <Spinner />;
   return (
     <StyledDashboardLayout>
@@ -30,8 +31,10 @@ function DashboardLayout() {
         bookings={bookings}
         confirmedStays={confirmedStays}
         numDays={numDays}
-        cabinCount={cabins.length}
+        cabinCount={cabins?.length}
       />
+      <DurationChart confirmedStays={confirmedStays} />
+      <SalesChart bookings={bookings} numDays={numDays} />
     </StyledDashboardLayout>
   );
 }
